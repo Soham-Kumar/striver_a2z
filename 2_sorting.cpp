@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
+
 // ---------------------- Selection Sort ----------------------
 int* selectionSort(int *arr, int lenarr) {
     int* sortedArr = new int[lenarr];
@@ -139,14 +141,44 @@ int* mergeSort(int* arr, int lenarr) {
 
 
 // ---------------------- Quick Sort ----------------------
-// 
+
+int partition(int* arr, int low, int high){
+    int pivotIndex = rand()%(high-low+1) + low;
+    int pivot = arr[pivotIndex];
+    swap(arr[pivotIndex], arr[low]); // Move pivot to the start
+    int i = low + 1;
+    int j = high;
+
+    while(i < j){
+        while(arr[i] <= pivot){
+            i++;
+        }
+        while(arr[j] > pivot){
+            j--;
+        }
+        if(i < j){
+            swap(arr[i], arr[j]);
+        }
+    }
+    
+    swap(arr[low], arr[j]);
+    return j;
+}
+
+
 int* quickSort(int* arr, int lenarr) {
-    if (lenarr <= 1) {
+
+    int j = 0;
+    if(lenarr <= 1){
         return arr;
+    } else {
+        j = partition(arr, 0, lenarr);
+        quickSort(arr, j);
+        quickSort(arr+j+1, lenarr-(j+1));
     }
 
-    int pivot = 
     return arr;
+
 }
 
 
@@ -163,29 +195,31 @@ int main() {
     int arr[10] = {24, 27, 43, 12, 32, 16, 18, 32, 2, 8};
     int lenarr = sizeof(arr) / sizeof(int);
     cout << "Length of given array is " << lenarr << endl;
+    cout << "Given Array:        ";
+    printArray(arr, lenarr);
 
     int* sortedArr = selectionSort(arr, lenarr);
-    cout << "Selection Sort: ";
+    cout << "Selection Sort:     ";
     printArray(sortedArr, lenarr);
     delete[] sortedArr;
 
     sortedArr = bubbleSort(arr, lenarr);
-    cout<<"Bubble Sort: ";
+    cout<<"Bubble Sort:        ";
     printArray(sortedArr, lenarr);
     delete[] sortedArr;
 
     sortedArr = insertionSort(arr, lenarr);
-    cout<<"Insertion Sort: ";
+    cout<<"Insertion Sort:     ";
     printArray(sortedArr, lenarr);
     delete[] sortedArr;
 
     sortedArr = mergeSort(arr, lenarr);
-    cout<<"Merge Sort: ";
+    cout<<"Merge Sort:         ";
     printArray(sortedArr, lenarr);
     delete[] sortedArr;
 
     sortedArr = quickSort(arr, lenarr);
-    cout<<"Quick Sort: ";
+    cout<<"Quick Sort:         ";
     printArray(sortedArr, lenarr);
     delete[] sortedArr;
     
